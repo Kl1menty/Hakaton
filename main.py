@@ -15,6 +15,8 @@ login_manager.init_app(application)
 application.config['SECRET_KEY'] = 'bfy45ue7iuyilutgbkwycu4b7e46ytwu4etriuw34yiuitwyeiut54'
 
 
+
+
 def posts():
     db_sess = db_session.create_session()
     return db_sess.query(Blog).order_by(Blog.id_post.desc())
