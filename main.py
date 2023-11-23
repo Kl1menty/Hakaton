@@ -6,12 +6,8 @@ from static.database.Main_menu import Main_menu
 from static.database.User import User
 from static.database import db_session
 from static.database.Blog import Blog
-
-
 from static.vendors.forms.Login import LoginForm
 from static.vendors.forms.Register import RegisterForm
-
-
 
 application = Flask(__name__)
 login_manager = LoginManager()
