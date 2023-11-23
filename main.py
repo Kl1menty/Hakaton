@@ -11,6 +11,8 @@ from static.database.Blog import Blog
 from static.vendors.forms.Login import LoginForm
 from static.vendors.forms.Register import RegisterForm
 
+
+
 application = Flask(__name__)
 login_manager = LoginManager()
 login_manager.init_app(application)
