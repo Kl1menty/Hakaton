@@ -1,0 +1,76 @@
+<div class="header">
+    <div class="header-left">
+        <div class="menu-icon bi bi-list"></div>
+        <div class="search-toggle-icon bi bi-search" data-toggle="header_search"></div>
+        <div class="header-search">
+            <form>
+                <div class="form-group mb-0">
+                    <i class="dw dw-search2 search-icon"></i>
+                    <input type="text" class="form-control search-input" placeholder="Поиск..."/>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="header-right">
+
+        <div class="user-notification">
+            <div class="dropdown">
+                <a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
+                    <i class="icon-copy dw dw-notification"></i>
+                    <span class="badge notification-active"></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <div class="notification-list mx-h-350 customscroll">
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <img src="{{url_for('static', filename='/vendors/images/img.jpg')}}" alt=""/>
+                                    <h3>John Doe</h3>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                                        elit, sed...
+                                    </p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="user-info-dropdown">
+
+            {% if current_user.is_authenticated %}
+            <div class="dropdown">
+                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+							<span class="user-icon">
+								<img src="static/vendors/images/users_profile_im/{{current_user.path_im_user}}" alt="">
+							</span>
+                    <span class="user-name">{{ current_user.first_name_user }} {{ current_user.last_name_user }}</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list" style="">
+                    <a class="dropdown-item" href="profile"><i class="dw dw-user1"></i> Профиль</a>
+                    <a class="dropdown-item" href="profile.html"><i class="dw dw-settings2"></i> Setting</a>
+                    <a class="dropdown-item" href="faq.html"><i class="dw dw-help"></i> Help</a>
+                    <a class="dropdown-item" href="logout"><i class="dw dw-logout"></i> Выход</a>
+                </div>
+            </div>
+
+
+            {% else %}
+            <div class="user-name" style="text-align: center;">
+
+                <ul>
+                    <li><a href="login">Вход</a></li>
+                    <li><a href="register">Регистрация</a></li>
+                </ul>
+            </div>
+            {% endif %}
+
+
+        </div>
+
+    </div>
+</div>
