@@ -6,6 +6,9 @@ from static.database.Main_menu import Main_menu
 from static.database.User import User
 from static.database import db_session
 from static.database.Blog import Blog
+from static.database.Products import Products
+from static.database.Shopping_cart import Shopping_card
+
 from static.vendors.forms.Login import LoginForm
 from static.vendors.forms.Register import RegisterForm
 
@@ -13,8 +16,6 @@ application = Flask(__name__)
 login_manager = LoginManager()
 login_manager.init_app(application)
 application.config['SECRET_KEY'] = 'bfy45ue7iuyilutgbkwycu4b7e46ytwu4etriuw34yiuitwyeiut54'
-
-
 
 
 def posts():
@@ -145,8 +146,42 @@ def gallery():
 
 
 @application.route('/products')
-def show_all_products():
-    return rend('index.html', 'Товары', 'products')
+def get_all_products():
+    db_sess = db_session.create_session()
+    res = db_sess.query(Products).all()
+    for elem in res:
+        print(elem)
+    return rend('index.html', 'Меню', 'products', products=res)
+
+
+@application.route('/products/<int:id_product>', methods=['GET'])
+def get_product(id_product):
+    db_sess = db_session.create_session()
+    res = db_sess.query(Products).filter(Products.id_products == id_product).first()
+    print(res)
+
+    return rend('index.html', 'Меню', 'product_info', product=res)
+
+
+@application.route('/products/<int:id_product>', methods=['POST'])
+def post_product(id_product):
+    db_sess = db_session.create_session()
+    add_card = Shopping_card(
+        id_user_card=1,
+        id_product=id_product
+    )
+    db_sess.add(add_card)
+    db_sess.commit()
+    return redirect('/products')
+
+
+@application.route('/shopping_card')
+def shopping_card():
+    db_sess = db_session.create_session()
+    res = db_sess.query(Shopping_card).filter(Shopping_card.id_user_card == 1)
+    r = db_sess.query(Products).filter(
+        Products.id_products.in_(db_sess.query(Shopping_card.id_product).filter(Shopping_card.id_user_card == 1))).all()
+    return rend('index.html', 'Корзина', 'shopping_card', products=r)
 
 
 def main():
@@ -154,4 +189,4 @@ def main():
 
 
 if __name__ == "__main__":
-    application.run(host='0.0.0.0', port='8080')
+    application.run(host='0.0.0.0')
